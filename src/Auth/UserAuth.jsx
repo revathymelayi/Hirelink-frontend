@@ -1,7 +1,7 @@
 import Cookies from "js-cookie"
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom"
-import { USER_ROLE } from "../constants/roles"
+import { USER_ROLE } from "../utils/roles"
 
 function UserAuth() {
     const userToken = Cookies.get("accessToken")

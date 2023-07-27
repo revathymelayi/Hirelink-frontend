@@ -11,7 +11,7 @@ const Header = () => {
   const handleLogout = () => {
     Cookies.remove("accessToken")
     dispatch(logoutUser)
-    navigate("/")
+    navigate("/login")
 }
   return (
     /* Header */

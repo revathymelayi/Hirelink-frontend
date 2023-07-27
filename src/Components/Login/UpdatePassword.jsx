@@ -30,7 +30,7 @@ const UpdatePassword = () => {
           toast.success(
             "Password updated successfully!! Login with the new password"
           );
-          navigate("/");
+          navigate("/login");
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {

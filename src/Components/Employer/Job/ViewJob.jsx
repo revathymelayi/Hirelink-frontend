@@ -5,19 +5,25 @@ import { useSelector } from "react-redux";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 
+
+
+
 const ViewJob = () => {
   const job = useSelector((state) => state.jobDetails.jobInfo);
- console.log(job)
+  
+ 
+  const user= useSelector((state)=>state.loggedUser.userInfo.employerdetails)
+
 
 return (
     <div className="md:flex items-start justify-center py-1 2xl:px-20 md:px-6 px-4">
       <div className="xl:w-1/6 lg:w-3/5 w-80 md:px-12 md:block hidden">
       
           
-              {job?.logoImage ? (
+              {user?.logo ? (
                 <img
                    className="w-20"
-                  src={`http://localhost:8080/user/${job.logoImage}`}
+                  src={`http://localhost:8080/user/${user.logo}`}
                   alt="Uploaded logo"
                  />
               ) : (
@@ -44,7 +50,7 @@ return (
 							mt-2
 						"
           >
-            {job?.companyName}
+            {user?.companyName}
             
           </h1>
           <p className="text-sm py-2 leading-none text-gray-600">{job?.location}</p>
@@ -107,6 +113,13 @@ return (
         </button>
         <div>
         <p className="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 mt-7">
+            About the job
+          </p>
+
+          <p className="text-base leading-6 mt-4 text-gray-600">
+            {job?.description}
+          </p>
+        <p className="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 mt-7">
             Skills Required
           </p>
 
@@ -114,18 +127,16 @@ return (
             {job?.skills}
           </p>
           <p className="text-base leading-4 mt-7 text-gray-600">
-            About the Company and Role
+            About the Company 
           </p>
           <p className="text-base leading-6 mt-4 text-gray-600">
-            {job?.description}
+            {user?.userBio}
           </p>
          
           <p className="text-base leading-4 mt-4 text-gray-600">
-            Experience Required: {job?.experience}
+            Experience Required: {job?.experience} Years
           </p>
-          <p className="md:w-96 text-base leading-normal text-gray-600 mt-4">
-            Schedule: Monday to Friday
-          </p>
+         
         </div>
       
       </div>

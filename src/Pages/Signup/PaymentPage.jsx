@@ -8,7 +8,10 @@ import Payment from "../../Components/Signup/Payment";
 function PaymentPage() {
   const paypal = useRef();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.loggedUser.userInfo);
+  // const user = useSelector((state) => state.loggedUser.userInfo);
+  const user = useSelector((state) => state.signupUserDetails.signupInfo);
+  console.log(user)
+
   const [checkout, setCheckOut] = useState(false);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ function PaymentPage() {
                 );
                 if (updateUserPayment.status === 200) {
                   toast.success("Payment completed successfully");
-                  navigate("/");
+                  navigate("/login");
                 }
               }
             } catch (error) {

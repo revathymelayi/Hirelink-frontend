@@ -13,6 +13,7 @@ const ListJob = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.loggedUser.userInfo);
+  console.log(user)
   const [isOpen, setIsOpen] = useState(false);
   const [jobInfo, setJobInfo] = useState("");
 
@@ -59,6 +60,10 @@ const ListJob = () => {
     setIsOpen(!isOpen);
   };
 
+
+
+ 
+
   const columns = useMemo(
     () => [
       {
@@ -69,14 +74,15 @@ const ListJob = () => {
             Header: "Job Title",
             accessor: "jobTitle",
             Cell: ({ value, row }) => {
-              const logo = row.original.logoImage;
+              const logo = row.original.logo;
+              
               return (
                 <div className="flex items-center gap-x-3">
-                  <img
+                  {/* <img
                     className="h-5 w-5"
                     src={`http://localhost:8080/user/${logo}`}
                     alt=""
-                  />
+                  /> */}
                   <h3 className="text-base leading-6 tracking-tight text-gray-900">
                     {value}
                   </h3>
@@ -146,6 +152,7 @@ const ListJob = () => {
       }
     })();
   }, [user._id]);
+  console.log(data);
 
   return (
     <>

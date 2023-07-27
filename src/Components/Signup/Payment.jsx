@@ -44,7 +44,7 @@ const Payment = forwardRef(function ({ checkout, setCheckOut }, ref) {
         <p>
           Already registered?{" "}
           <Link
-            to="/"
+            to="/login"
             className="mt-4 leading-6 text-custom-yellow font-normal text-blue-700 hover:text-blue-800"
           >
             Login

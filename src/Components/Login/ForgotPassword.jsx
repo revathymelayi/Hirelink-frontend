@@ -73,7 +73,7 @@ const ForgotPassword = () => {
               Remember your password?{" "}
               
                <Link
-                to="/" className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                to="/login" className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                 Sign in
               

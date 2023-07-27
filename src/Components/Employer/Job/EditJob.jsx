@@ -6,64 +6,101 @@ import axios from "../../../Config/axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+const EditJob = () => {
+  const job = useSelector((state) => state.jobDetails.jobInfo);
+  console.log("job:", job);
+  const [categories, setCategories] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get("api/admin/categories")
+      .then((response) => {
+        const list = response.data.categories;
+        setCategories(list);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An error occurred. Please try again later");
+        }
+      });
+    axios
+      .get("api/admin/job-types")
+      .then((response) => {
+        const list = response.data.jobtypes;
+        setTypes(list);
+        setIsLoading(false); 
+      })
+     
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An error occurred. Please try again later");
+        }
+        setIsLoading(false);
+      });
+  }, []);
+  const navigate = useNavigate();
 
-const EditJob= ()=>{
-    const job = useSelector((state) => state.jobDetails.jobInfo)
-    
-    const [categories, setCategories] = useState([]);
-    const [types, setTypes] = useState([]);
-    useEffect(() => {
-        axios
-          .get("api/admin/categories")
-          .then((response) => {
-            const list = response.data.categories;
-            setCategories(list);
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 400) {
-              toast.error(error.response.data.message);
-            } else {
-              toast.error("An error occurred. Please try again later");
-            }
-          });
-        axios
-          .get("api/admin/job-types")
-          .then((response) => {
-            const list = response.data.jobtypes;
-            setTypes(list);
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 400) {
-              toast.error(error.response.data.message);
-            } else {
-              toast.error("An error occurred. Please try again later");
-            }
-          });
-      }, []);
-      const navigate = useNavigate();
-      
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  //   watch,
+  // } = useForm({
+  //   defaultValues: {
+  //     jobTitle: job.jobTitle,
+  //     description: job.description,
+  //     experience: job.experience,
+  //     location: job.location,
+  //     salary: job.salary,
+  //     jobtype: job.jobtype._id,
+  //     category: job.category._id,
+  //     skills: job.skills,
+  //   },
+  // });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     watch,
-  } = useForm({
-    defaultValues: {
-      jobTitle:job.jobTitle,
-      companyName:job.companyName,
-      description:job.description,
-      experience: job.experience,
-      location:job.location,
-      salary: job.salary,
-      jobtype: job.jobtype,
-      category: job.category,
-      skills:job.skills,
-      logoImage: job.logoImage,
-    },
-  });
+  } = useForm();
+  
+  useEffect(() => {
+    if (job) {
+      // Set default value for jobTitle
+      setValue("jobTitle", job.jobTitle);
+      // Set default value for description
+      setValue("description", job.description);
+      // Set default value for experience
+      setValue("experience", job.experience);
+      // Set default value for location
+      setValue("location", job.location);
+      // Set default value for salary
+      setValue("salary", job.salary);
+      // Set default value for skills
+      setValue("skills", job.skills);
+  
+      // Set default value for jobtype (an array of IDs)
+      setValue("jobtype", job.jobtype.map((item) => item._id));
+  
+      // Set default value for category (an array of IDs)
+      setValue("category", job.category.map((item) => item._id));
+    }
+    console.log("Default jobtype:", jobtype);
+    console.log("Default category:", category);
+  }, [job, setValue]);
+  
+  // Rest of the code remains the same
+  
+
   const {
     jobTitle,
-    companyName,
     description,
     experience,
     location,
@@ -71,10 +108,8 @@ const EditJob= ()=>{
     jobtype,
     category,
     skills,
-    logoImage,
   } = watch([
     "jobTitle",
-    "companyName",
     "description",
     "experience",
     "location",
@@ -82,45 +117,34 @@ const EditJob= ()=>{
     "jobtype",
     "category",
     "skills",
-    "logoImage",
   ]);
-  const [selectedCompanyLogo, setCompanyLogo] = useState("");
-  const [showLogo, setLogo] = useState("");
+ 
 
-  const [imageSize, setImageSize] = useState(0);
-
-  const handleCompanyLogoChange = (e) => {
-    setCompanyLogo(e.target.files[0]);
-    setLogo(URL.createObjectURL(e.target.files[0]));
-   
-  };
   const user = useSelector((state) => state.loggedUser.userInfo);
   const onSubmit = async (data) => {
+    console.log("data:", data);
     try {
-     
       if (data) {
-        const formData = new FormData();
-        // Append form fields to formData
+        const jobData = {
+          jobTitle: data.jobTitle,
+          description: data.description,
+          experience: data.experience,
+          location: data.location,
+          salary: data.salary,
+          skills: data.skills,
+          jobtype: data.jobtype[0],
+          category: data.category[0],
+        };
 
-        formData.append("jobTitle", data.jobTitle);
-        formData.append("companyName",data.companyName);
-        formData.append("description", data.description);
-        formData.append("experience", data.experience);
-        formData.append("location", data.location);
-        formData.append("salary", data.salary);
-        formData.append("skills",data.skills);
-        formData.append("jobtype", data.jobtype);
-        formData.append("category", data.category);
-        formData.append("logoImage", data.logoImage[0]);
-
-        const response = await axios.post(
-          `api/employer/add-job?employerId=${user._id}`,
-          formData
+        const response = await axios.put(
+          `api/employer/edit-job?jobId=${job._id}`,
+          jobData
         );
-        // if (response.status === 200) {
-        //   toast.success("job added successfully");
-        //   navigate("/employer/job-posts");
-        // }
+
+        if (response.status === 200) {
+          // Job details updated successfully
+          toast.success("Job details updated successfully");
+        }
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -130,6 +154,11 @@ const EditJob= ()=>{
       }
     }
   };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+
   return (
     <div className="flex flex-grow   items-center justify-center   mb-32 ">
       <form
@@ -149,32 +178,6 @@ const EditJob= ()=>{
 
         <div className="grid grid-cols-1 mt-5 mx-7">
           <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
-            Company Name
-          </label>
-          <input
-            className="py-2 px-3 rounded-lg  mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent"
-            type="text"
-            id="companyName"
-            name="companyName"
-            
-            {...register("companyName", {
-              required: "Company name is required",
-              pattern: {
-                value:
-                  /^(?=.*\S)[A-Za-z\s\d!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]+$/i,
-                message: "Name should only contain letters",
-              },
-            })}
-           
-          />
-          {errors.companyName && (
-            <small className="mt-2 text-white text-sm">
-              {errors.companyName.message}
-            </small>
-          )}
-        </div>
-        <div className="grid grid-cols-1 mt-5 mx-7">
-          <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
             Job Title
           </label>
           <input
@@ -182,7 +185,6 @@ const EditJob= ()=>{
             type="text"
             id="jobtitle"
             name="jobtitle"
-            
             {...register("jobTitle", {
               required: "Job Title is required",
               pattern: {
@@ -191,7 +193,6 @@ const EditJob= ()=>{
                 message: "Title should only contain letters",
               },
             })}
-           
           />
           {errors.jobTitle && (
             <small className="mt-2 text-white text-sm">
@@ -253,6 +254,24 @@ const EditJob= ()=>{
           <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
             Select Industry
           </label>
+          {/* <select
+            id="category"
+            name="category"
+            autoComplete="category-name"
+            {...register("category", {
+              required: "Category is required",
+            })}
+            className={`py-2 px-3 rounded-lg  md:text-sm text-sm mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent ${
+              errors.category ? "border-white" : ""
+            }`}
+            defaultValue={job?.category}
+          >
+            {categories.map((category, i) => (
+              <option key={i} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select> */}
           <select
             id="category"
             name="category"
@@ -263,15 +282,15 @@ const EditJob= ()=>{
             className={`py-2 px-3 rounded-lg  md:text-sm text-sm mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent ${
               errors.category ? "border-white" : ""
             }`}
-            defaultValue={ job?.category }
+            value={category} // Set the value to the selected category ID
           >
-            
             {categories.map((category, i) => (
               <option key={i} value={category._id}>
                 {category.name}
               </option>
             ))}
           </select>
+
           {errors.category && (
             <small className="mt-2 text-white text-sm">
               {errors.category.message}
@@ -283,6 +302,24 @@ const EditJob= ()=>{
           <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
             Select Type
           </label>
+          {/* <select
+            id="jobtype"
+            name="jobtype"
+            autoComplete="job-type"
+            {...register("jobtype", {
+              required: "job-type is required",
+            })}
+            className={`py-2 px-3 rounded-lg  md:text-sm text-xs  mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent ${
+              errors.jobtype ? "border-white" : ""
+            }`}
+            defaultValue={job?.jobtype}
+          >
+            {types.map((type, i) => (
+              <option key={i} value={type._id}>
+                {type.name}
+              </option>
+            ))}
+          </select> */}
           <select
             id="jobtype"
             name="jobtype"
@@ -293,15 +330,15 @@ const EditJob= ()=>{
             className={`py-2 px-3 rounded-lg  md:text-sm text-xs  mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent ${
               errors.jobtype ? "border-white" : ""
             }`}
-            defaultValue={ job?.jobtype }
+            value={jobtype} // Set the value to the selected jobtype ID
           >
-            
             {types.map((type, i) => (
               <option key={i} value={type._id}>
                 {type.name}
               </option>
             ))}
           </select>
+
           {errors.jobtype && (
             <small className="mt-2 text-white text-sm">
               {errors.jobtype.message}
@@ -379,53 +416,6 @@ const EditJob= ()=>{
           )}
         </div>
 
-        <div className="grid grid-cols-1 mt-5 mx-7 rounded-full">
-          <label className="md:text-sm text-xs text-gray-900 text-light font-semibold mb-1">
-             Company Logo
-          </label>
-          <div className="flex items-center justify-center rounded-full">
-            <label className="flex flex-col border-4 border-dashed ">
-             
-              {showLogo ? (
-                <img
-                  className="h-20 w-20 rounded-full"
-                  src={ showLogo}
-                  alt="Uploaded logo"
-                />
-              ) : (
-                <img
-                className="h-20 w-20  rounded-full"
-                src={ `http://localhost:8080/user/${ job?.logoImage }` }
-                alt="Uploaded logo"
-                />
-              )}
-              
-
-              <input
-                className="hidden"
-                id="file_input"
-                type="file"
-                name="logoImage"
-                onChange={handleCompanyLogoChange}
-                
-                {...register("logoImage", {
-                  required: "Image is required",
-                 
-                })}
-              />
-            </label>
-          </div>
-          {errors.logoImage ? (
-            <small className="mt-2 text-white text-sm">
-              {errors.logoImage.type === "required"
-                ? errors.logoImage.message
-                : `Image size: ${imageSize}KB. ${errors.logoImage.message}`}
-            </small>
-          ) : (
-            ""
-          )}
-        </div>
-
         <div className="flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5">
           <button
             type="button"
@@ -438,12 +428,12 @@ const EditJob= ()=>{
             style={{ backgroundColor: "#c2033a" }}
             className="w-auto  hover:bg-blue-800 rounded-lg shadow-xl font-medium text-white px-4 py-2"
           >
-            Create
+            Update
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default EditJob;

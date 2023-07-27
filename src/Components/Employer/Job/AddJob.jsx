@@ -46,20 +46,17 @@ function AddJob() {
   } = useForm({
     defaultValues: {
       jobTitle: "",
-      companyName:"",
       description: "",
       experience: "",
       location: "",
       salary: "",
       jobtype: "",
       category: "",
-      skills:"",
-      logoImage: "",
+      skills: "",
     },
   });
   const {
     jobTitle,
-    companyName,
     description,
     experience,
     location,
@@ -67,10 +64,8 @@ function AddJob() {
     jobtype,
     category,
     skills,
-    logoImage,
   } = watch([
     "jobTitle",
-    "companyName",
     "description",
     "experience",
     "location",
@@ -78,45 +73,32 @@ function AddJob() {
     "jobtype",
     "category",
     "skills",
-    "logoImage",
   ]);
-  const [selectedCompanyLogo, setCompanyLogo] = useState("");
-  const [showLogo, setLogo] = useState("");
- 
 
-  const [imageSize, setImageSize] = useState(0);
-
-  const handleCompanyLogoChange = (e) => {
-    setCompanyLogo(e.target.files[0]);
-    setLogo(URL.createObjectURL(e.target.files[0]));
-   
-  };
   const user = useSelector((state) => state.loggedUser.userInfo);
+
   const onSubmit = async (data) => {
     try {
-     
       if (data) {
-        const formData = new FormData();
-        // Append form fields to formData
-
-        formData.append("jobTitle", data.jobTitle);
-        formData.append("companyName", data.companyName);
-        formData.append("description", data.description);
-        formData.append("experience", data.experience);
-        formData.append("location", data.location);
-        formData.append("salary", data.salary);
-        formData.append("skills",data.skills);
-        formData.append("jobtype", data.jobtype);
-        formData.append("category", data.category);
-        formData.append("logoImage", data.logoImage[0]);
+        const payload = {
+          jobTitle: data.jobTitle,
+          description: data.description,
+          experience: data.experience,
+          location: data.location,
+          salary: data.salary,
+          skills: data.skills,
+          jobtype: data.jobtype,
+          category: data.category,
+          employerId: user._id,
+        };
 
         const response = await axios.post(
           `api/employer/add-job?employerId=${user._id}`,
-          formData
+          payload
         );
         if (response.status === 200) {
-          toast.success("job added successfully");
-          navigate("/employer/job-posts");
+          toast.success("Job added successfully");
+          navigate("/employer/jobs");
         }
       }
     } catch (error) {
@@ -152,8 +134,8 @@ function AddJob() {
           <input
             className="py-2 px-3 rounded-lg  mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent"
             type="text"
-            id="jobtitle"
-            name="jobtitle"
+            id="jobTitle"
+            name="jobTitle"
             {...register("jobTitle", {
               required: "Job Title is required",
               pattern: {
@@ -166,30 +148,6 @@ function AddJob() {
           {errors.jobTitle && (
             <small className="mt-2 text-white text-sm">
               {errors.jobTitle.message}
-            </small>
-          )}
-        </div>
-        <div className="grid grid-cols-1 mt-5 mx-7">
-          <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
-            Company Name
-          </label>
-          <input
-            className="py-2 px-3 rounded-lg  mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent"
-            type="text"
-            id="companyName"
-            name="companyName"
-            {...register("companyName", {
-              required: "Company Name is required",
-              pattern: {
-                value:
-                  /^(?=.*\S)[A-Za-z\s\d!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]+$/i,
-                message: "Name should only contain letters",
-              },
-            })}
-          />
-          {errors.companyName && (
-            <small className="mt-2 text-white text-sm">
-              {errors.companyName.message}
             </small>
           )}
         </div>
@@ -219,20 +177,22 @@ function AddJob() {
             )}
           </div>
 
+       
           <div className="grid grid-cols-1">
-            <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
+            <label className="md:text-sm text-xs text-gray-900 text-light font-semibold">
               Experience Required
             </label>
             <input
-              className="py-2 px-3 rounded-lg   mt-1  focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent"
+              className="py-2 px-3 rounded-lg mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent"
               type="text"
               id="experience"
               name="experience"
               {...register("experience", {
-                required: "experience is required",
+                required: "Experience is required",
                 pattern: {
                   value: /^[0-9a-zA-Z]+$/,
-                  message: "experience should only contain numbers",
+                  message:
+                    "Experience should only contain numbers and characters",
                 },
               })}
             />
@@ -368,80 +328,6 @@ function AddJob() {
             <small className="mt-2 text-white text-sm">
               {errors.description.message}
             </small>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 mt-5 mx-7">
-          <label className="md:text-sm text-xs text-gray-900 text-light font-semibold mb-1">
-            Upload Company Logo
-          </label>
-          <div className="flex items-center justify-center w-full">
-            <label className="flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group">
-             
-              {showLogo ? (
-                <img
-                  className="h-96 w-96 rounded-full"
-                  src={showLogo}
-                  alt="Uploaded logo"
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center pt-7">
-                  <svg
-                    className="w-10 h-10 text-blue-400 group-hover:text-blue-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    ></path>
-                  </svg>
-                  <p className="lowercase text-sm text-gray-900 group-hover:text-blue-600 pt-1 tracking-wider">
-                    Upload a company logo
-                  </p>
-                </div>
-              )}
-              
-
-              <input
-                className="hidden"
-                id="file_input"
-                type="file"
-                name="logoImage"
-                onChange={handleCompanyLogoChange}
-                
-                {...register("logoImage", {
-                  required: "Image is required",
-                  validate: {
-                    filesize: (file) => {
-                      if (file && file[0]) {
-                        const sizeInkB = file[0].size / 1024;
-                        setImageSize(sizeInkB);
-                        const maxImageSize = 500;
-                        return (
-                          sizeInkB <= maxImageSize ||
-                          `Image should not exceed ${maxImageSize}KB`
-                        );
-                      }
-                      return true;
-                    },
-                  },
-                })}
-              />
-            </label>
-          </div>
-          {errors.logoImage ? (
-            <small className="mt-2 text-white text-sm">
-              {errors.logoImage.type === "required"
-                ? errors.logoImage.message
-                : `Image size: ${imageSize}KB. ${errors.logoImage.message}`}
-            </small>
-          ) : (
-            ""
           )}
         </div>
 

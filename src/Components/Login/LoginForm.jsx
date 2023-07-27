@@ -39,13 +39,18 @@ const LoginForm = () => {
         const response = await axios.post("/api/auth/user/login", input);
         if (response.status === 200) {
           const { accessToken, user } = response.data;
-          Cookies.set("accessToken", accessToken);
+          if (user.role !== PENDING_EMPLOYER)
+            Cookies.set("accessToken", accessToken);
           dispatch(loggedUserDetails(user));
+          console.log(user);
           if (user.role === USER_ROLE) navigate("/user/dashboard");
           else if (user.role === EMPLOYER_ROLE) navigate("/employer/dashboard");
           else if (user.role === ADMIN_ROLE) navigate("/admin/dashboard");
-          else if (user.role === PENDING_EMPLOYER)
+          else if (user.role === PENDING_EMPLOYER && !user.employerdetails)
             navigate(`/profile-complete/${user.firstName}/${user._id}`);
+            else
+            navigate(`/payment/${ user._id }`);
+          
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -59,11 +64,15 @@ const LoginForm = () => {
 
   return (
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
-      
       <div className="absolute top-0 left-0 mt-2 ml-6">
-        <img className="w-36" src="/hireLink.png" alt="logo" />
+        <Link to="/">
+          <img className="w-36" src="/hireLink.png" alt="logo" />
+        </Link>
       </div>
-      <div style={{marginTop:'5rem'}}  class="w-full mt-12 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div
+        style={{ marginTop: "5rem" }}
+        class="w-full mt-12 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      >
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign in to your account
@@ -150,7 +159,7 @@ const LoginForm = () => {
                 Forgot password?
               </Link>
             </div>
-          
+
             <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-2">
               Don’t have an account yet?{" "}
               <Link

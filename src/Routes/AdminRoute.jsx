@@ -7,6 +7,8 @@ import EmployersList from '../Components/Admin/EmployersList';
 import Header from '../Components/Admin/Header';
 import Categories from '../Components/Admin/Category/Categories';
 import Jobtypes from '../Components/Admin/JobType/Jobtypes'
+import JobList from '../Components/Admin/Jobs/JobList';
+import Error from '../Components/Error';
 
 
 const AdminRoute = () => {
@@ -26,6 +28,8 @@ const AdminRoute = () => {
                             <Route path="users" element={ <UsersList /> } />
                             <Route path="employers" element={ <EmployersList /> } />
                             <Route path ="jobtypes"  element={<Jobtypes/> }  />
+                            <Route path= "jobs" element={<JobList/>} />
+                            <Route path="*" element={ <Error /> } />
                             
                       
                         </Routes>
