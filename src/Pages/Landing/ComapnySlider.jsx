@@ -14,7 +14,7 @@ const CompanySlider = () => {
   console.log("asd:",user)
   useEffect(() => {
     (async () => {
-        const fetchEmployers = await axios.get(`api/user/employers?userId=${ user._id }`)
+        const fetchEmployers = await axios.get(`api/auth/employers`)
         setEmployers(fetchEmployers.data.employers);
        
     })()

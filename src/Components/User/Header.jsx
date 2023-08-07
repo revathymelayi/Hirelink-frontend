@@ -244,36 +244,31 @@ export default function Header({ notifications, setNotifications, setSelectedCha
                 dropDown ? "hidden" : "block"
               } font-normal text-base leading-4 absolute top-2  w-full rounded shadow-md`}
             >
+              <Link to='/user/dashboard'>
               <li
-                onClick={() => setSelectedText("Arts")}
+                onClick={() => setSelectedText("Dashboard")}
                 className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
               >
                 Dashboard
               </li>
+              </Link>
+              <Link to='/user/employers'>
               <li
-                onClick={() => setSelectedText("Space")}
+                onClick={() => setSelectedText("Employers")}
+                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
+              >
+                Employers
+              </li>
+              </Link>
+              <Link to='/user/jobs'>
+              <li
+                onClick={() => setSelectedText("Jobs")}
                 className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
               >
                 Jobs
               </li>
-              <li
-                onClick={() => setSelectedText("Game")}
-                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
-              >
-                Game
-              </li>
-              <li
-                onClick={() => setSelectedText("Utility")}
-                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
-              >
-                Utility
-              </li>
-              <li
-                onClick={() => setSelectedText("Cards")}
-                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
-              >
-                Cards
-              </li>
+              </Link>
+             
             </ul>
           </div>
         </div>

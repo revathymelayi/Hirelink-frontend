@@ -14,7 +14,7 @@ const JobSlider = () => {
   console.log("asd:", user);
   useEffect(() => {
     (async () => {
-      const fetchJobs = await axios.get(`api/user/jobs?userId=${user._id}`);
+      const fetchJobs = await axios.get(`api/auth/jobs`);
       setJobs(fetchJobs.data.jobs);
     })();
   }, [jobs.length]);

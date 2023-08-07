@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import Cookies from "js-cookie";
@@ -11,7 +11,6 @@ import Stack from '@mui/material/Stack';
 const navigation = [
   { name: "Dashboard", href: "/employer/dashboard", current: false },
   { name: "Job List", href: "/employer/jobs", current: false },
-  // { name: "Candidates", href: "/employer/candidates", current: false },
   { name: "Post a Job", href: "/employer/add-job", current: false },
 ];
 const userNavigation = [
@@ -242,36 +241,32 @@ export default function Header({ notifications, setNotifications, setSelectedCha
                 dropDown ? "hidden" : "block"
               } font-normal text-base leading-4 absolute top-2  w-full rounded shadow-md`}
             >
+              <Link to="/employer/dashboard">
               <li
-                onClick={() => setSelectedText("Arts")}
+                onClick={() => setSelectedText("Dashboard")}
                 className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
               >
                 Dashboard
               </li>
+              </Link>
+              <Link to="/employer/jobs">
               <li
-                onClick={() => setSelectedText("Space")}
+                onClick={() => setSelectedText("Job List")}
                 className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
               >
-                Jobs
+                Job List
               </li>
+              </Link>
+              <Link to="/employer/add-job">
               <li
-                onClick={() => setSelectedText("Game")}
+                onClick={() => setSelectedText("Post a Job")}
                 className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
               >
-                Game
+                Post a Job
               </li>
-              <li
-                onClick={() => setSelectedText("Utility")}
-                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
-              >
-                Utility
-              </li>
-              <li
-                onClick={() => setSelectedText("Cards")}
-                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal"
-              >
-                Cards
-              </li>
+              </Link>
+             
+             
             </ul>
           </div>
         </div>

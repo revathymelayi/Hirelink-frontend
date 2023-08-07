@@ -22,7 +22,13 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/dashboard"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/dashboard'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
+              
+              
             >
               <SpaceDashboardIcon
                 className="mr-6 text-[#f3faf4]"
@@ -34,7 +40,11 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/jobtypes"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/jobtypes'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
             >
               <CategoryIcon
                 className="mr-6 text-[#f3faf4]"
@@ -48,7 +58,11 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/categories"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/categories'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
             >
               <CategoryIcon
                 className="mr-6 text-[#f3faf4]"
@@ -60,7 +74,11 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/employers"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/employers'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
             >
               <BusinessIcon
                 className="mr-6 text-[#f3faf4]"
@@ -72,7 +90,11 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/users"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/users'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
             >
               <PeopleIcon
                 className="mr-6 text-[#f3faf4]"
@@ -86,7 +108,11 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/jobs"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/jobs'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
             >
               <WorkIcon
                 className="mr-6 text-[#f3faf4]"
@@ -98,7 +124,11 @@ const Sidebar = () => {
           <li>
             <Link
               to="/admin/revenue"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+              className={`relative flex flex-row items-center h-11 ${
+                location.pathname === '/admin/revenue'
+                  ? 'focus:outline-none bg-blue-600 hover:bg-blue-600 dark:bg-gray-600 dark:hover:bg-gray-600'
+                  : 'text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6'
+              }`}
             >
               <ReceiptLongIcon
                 className="mr-6 text-[#f3faf4]"
