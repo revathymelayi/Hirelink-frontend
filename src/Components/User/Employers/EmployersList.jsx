@@ -75,7 +75,7 @@ function EmployerList() {
       <div className="container mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 pt-6 gap-8">
         {employers.map((employer, index) => (
           <div
-            className="bg-white p-3 rounded-xl shadow-xl flex items-center justify-between mt-4"
+            className="bg-white p-3 rounded-xl shadow-xl flex items-center justify-between mt-4 cursor-pointer"
             key={index}
             onClick={() => showEmployerDetails(employer)}
           >

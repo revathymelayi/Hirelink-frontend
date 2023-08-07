@@ -5,11 +5,13 @@ import { Fragment } from "react";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux-toolkit/slices/userSlice";
+import Badge from '@mui/material/Badge';
+import Stack from '@mui/material/Stack';
 
 const navigation = [
   { name: "Dashboard", href: "/employer/dashboard", current: false },
   { name: "Job List", href: "/employer/jobs", current: false },
-  { name: "Candidates", href: "/employer/candidates", current: false },
+  // { name: "Candidates", href: "/employer/candidates", current: false },
   { name: "Post a Job", href: "/employer/add-job", current: false },
 ];
 const userNavigation = [
@@ -17,7 +19,7 @@ const userNavigation = [
   { name: "Sign out", href: "#", id: "signout" },
 ];
 
-export default function Header() {
+export default function Header({ notifications, setNotifications, setSelectedChat }) {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
@@ -46,6 +48,10 @@ export default function Header() {
   const setSelectedText = (txt) => {
     setText(txt);
     setDropDown(true);
+  };
+  const handleChatIconClick = () => {
+  
+    navigate("/employer/chats");
   };
 
   return (
@@ -86,7 +92,9 @@ export default function Header() {
           </div>
 
           <div className=" flex space-x-5 justify-center items-center pl-2">
-            <div className="relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 ">
+            <div className="relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 "
+              onClick={handleChatIconClick}
+            >
               <svg
                 width={24}
                 height={24}
@@ -105,6 +113,7 @@ export default function Header() {
               <div className="animate-ping w-1.5 h-1.5 bg-blue-700 rounded-full absolute -top-1 -right-1 m-auto duration-200" />
               <div className=" w-1.5 h-1.5 bg-blue-700 rounded-full absolute -top-1 -right-1 m-auto shadow-lg" />
             </div>
+            <Badge badgeContent={ notifications.length > 0 ? notifications.length : "0" } color="secondary">
             <svg
               className="cursor-pointer  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 "
               width={24}
@@ -128,6 +137,7 @@ export default function Header() {
                 strokeLinejoin="round"
               />
             </svg>
+            </Badge>
 
             <Menu as="div" className="relative">
               <div>

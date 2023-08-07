@@ -8,6 +8,8 @@ import Header from '../Components/Admin/Header';
 import Categories from '../Components/Admin/Category/Categories';
 import Jobtypes from '../Components/Admin/JobType/Jobtypes'
 import JobList from '../Components/Admin/Jobs/JobList';
+import ViewJob from '../Components/Admin/Jobs/ViewJob';
+import Revenue from '../Components/Admin/Revenue/Revenue';
 import Error from '../Components/Error';
 
 
@@ -29,6 +31,8 @@ const AdminRoute = () => {
                             <Route path="employers" element={ <EmployersList /> } />
                             <Route path ="jobtypes"  element={<Jobtypes/> }  />
                             <Route path= "jobs" element={<JobList/>} />
+                            <Route path="job/:jobId" element={<ViewJob />} />
+                            <Route path="revenue" element={<Revenue/>}/>
                             <Route path="*" element={ <Error /> } />
                             
                       

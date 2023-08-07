@@ -45,23 +45,6 @@ const EditJob = () => {
   }, []);
   const navigate = useNavigate();
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   watch,
-  // } = useForm({
-  //   defaultValues: {
-  //     jobTitle: job.jobTitle,
-  //     description: job.description,
-  //     experience: job.experience,
-  //     location: job.location,
-  //     salary: job.salary,
-  //     jobtype: job.jobtype._id,
-  //     category: job.category._id,
-  //     skills: job.skills,
-  //   },
-  // });
 
   const {
     register,
@@ -69,7 +52,20 @@ const EditJob = () => {
     formState: { errors },
     setValue,
     watch,
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      jobTitle:job.jobTitle,
+      salary:job.salary,
+      experience:job.experience,
+      location:job.location,
+      jobtype:job.jobtype,
+      category:job.category,
+      skill:job.skill,
+      description:job.description
+
+
+    }
+  });
   
   useEffect(() => {
     if (job) {
@@ -96,7 +92,7 @@ const EditJob = () => {
     console.log("Default category:", category);
   }, [job, setValue]);
   
-  // Rest of the code remains the same
+
   
 
   const {
@@ -132,8 +128,8 @@ const EditJob = () => {
           location: data.location,
           salary: data.salary,
           skills: data.skills,
-          jobtype: data.jobtype[0],
-          category: data.category[0],
+          jobtype: data.jobtype,
+          category: data.category,
         };
 
         const response = await axios.put(
@@ -254,24 +250,7 @@ const EditJob = () => {
           <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
             Select Industry
           </label>
-          {/* <select
-            id="category"
-            name="category"
-            autoComplete="category-name"
-            {...register("category", {
-              required: "Category is required",
-            })}
-            className={`py-2 px-3 rounded-lg  md:text-sm text-sm mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent ${
-              errors.category ? "border-white" : ""
-            }`}
-            defaultValue={job?.category}
-          >
-            {categories.map((category, i) => (
-              <option key={i} value={category._id}>
-                {category.name}
-              </option>
-            ))}
-          </select> */}
+         
           <select
             id="category"
             name="category"
@@ -302,24 +281,7 @@ const EditJob = () => {
           <label className=" md:text-sm text-xs text-gray-900 text-light font-semibold">
             Select Type
           </label>
-          {/* <select
-            id="jobtype"
-            name="jobtype"
-            autoComplete="job-type"
-            {...register("jobtype", {
-              required: "job-type is required",
-            })}
-            className={`py-2 px-3 rounded-lg  md:text-sm text-xs  mt-1 focus:outline-none focus:ring-1 focus:ring-blue-900 focus:border-transparent ${
-              errors.jobtype ? "border-white" : ""
-            }`}
-            defaultValue={job?.jobtype}
-          >
-            {types.map((type, i) => (
-              <option key={i} value={type._id}>
-                {type.name}
-              </option>
-            ))}
-          </select> */}
+         
           <select
             id="jobtype"
             name="jobtype"

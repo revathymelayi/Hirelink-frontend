@@ -59,7 +59,11 @@ const ListJob = () => {
     setJobInfo(job);
     setIsOpen(!isOpen);
   };
-
+  //view candidates
+  const viewCandidates=(job)=>{
+    dispatch(jobDetails(job));
+    navigate(`/employer/candidates/${job._id}`)
+  }
 
 
  
@@ -98,7 +102,9 @@ const ListJob = () => {
             Header: "Category",
             accessor: "category[0].name",
           },
-          {
+         
+         
+           {
             Header: "Action",
             accessor: "isActive",
             Cell: ({ value, row }) => {
@@ -122,6 +128,30 @@ const ListJob = () => {
                   <VisibilityIcon
                     className="cursor-pointer"
                     onClick={() => viewJob(row.original)}
+                    sx={{ color: "#b3b300" }}
+                    fontSize="small"
+                  />
+                </div>
+              );
+            },
+          },
+          {
+            Header: "Applicants",
+            accessor: "numberOfApplicants",
+          },
+          {
+            Header:"View Applicants",
+            accessor:" ",
+            Cell: ({ value, row }) => {
+              return (
+                <div
+                  className="space-x-10"
+                  style={{ display: "flex", flexDirection: "row" }}
+                >
+                 
+                  <VisibilityIcon
+                    className="cursor-pointer"
+                    onClick={() => viewCandidates(row.original)}
                     sx={{ color: "#b3b300" }}
                     fontSize="small"
                   />

@@ -25,15 +25,13 @@ const LandingPage = () => {
         </div>
         <div className="sub_head ml-auto flex space-x-4 sm:space-x-8 my-auto">
           <div className="h_btns cursor-pointer">Home</div>
-          {/* <button className="h_btns cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-            Login
-          </button> */}
+        
           <Link to="/login">
             <button className="relative group overflow-hidden px-2 h-8 rounded-full flex space-x-2 items-center bg-gradient-to-r from-blue-500 to-purple-500 hover:to-blue-700">
               <span className="relative text-sm text-white">Login</span>
             </button>
           </Link>
-          {/* <div className="h_btns cursor-pointer">Login</div> */}
+         
         </div>
       </div>
 
@@ -48,7 +46,7 @@ const LandingPage = () => {
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
-                backgroundImage: "linear-gradient(to right, #0000d9,#3a00ca)",
+                backgroundImage: "linear-gradient(to right,#0000d9,#a500e4,#f2d0ff)",
                 fontWeight: "bold",
                 fontFamily: "sans-serif",
                 fontSize: "60px",
@@ -58,24 +56,8 @@ const LandingPage = () => {
               Find work you'll love,fast.
             </h1>
 
-            {/* <form >
-            <div className="mt-8 flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center">
-              <input
-                id="email"
-                type="text"
-                className="rounded-md border border-transparent bg-white/20 px-4 py-2 text-white placeholder-white backdrop-blur-sm focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
-                placeholder="Email Address"
-              />
-
-              <button
-                type="submit"
-                className="transform rounded-md bg-blue-700 px-8 py-2 text-sm font-medium capitalize tracking-wide text-white transition-colors duration-200 hover:bg-blue-600 focus:bg-blue-600 focus:outline-none"
-              >
-                Notify Me
-              </button>
-            </div>
-          </form> */}
-            <div class="max-w-2xl mx-auto">
+           
+            {/* <div class="max-w-2xl mx-auto">
               <form>
                 <label
                   htmlFor="default-search"
@@ -116,7 +98,7 @@ const LandingPage = () => {
                   </button>
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -131,14 +113,14 @@ const LandingPage = () => {
           fontFamily: "sans-serif",
           fontSize: "28px",
         }}
-        className="heading_section italic bg-white font-semibold text-3xl text-center p-5 pt-24 text-blue-800"
+        className="heading_section italic bg-white font-semibold text-3xl text-center p-5 pt-6 text-blue-800"
       >
         Jobs Hiring Now
       </div>
 
       <JobSlider />
 
-      <div className="section py-28 w-full scree border grid md:grid-cols-2 bg-white text-gray-800">
+      <div className="section py-5 w-full scree border grid md:grid-cols-2 bg-white text-gray-800">
         <div className="subsec flex-none overflow-hidden max-h-96">
           <img className="w-full" src="/images/banner3.jpg" alt="Pizza" />
         </div>
@@ -253,7 +235,7 @@ const LandingPage = () => {
           fontFamily: "sans-serif",
           fontSize: "28px",
         }}
-        className="heading_section italic bg-white font-semibold text-3xl text-center p-5 pt-24 text-blue-800"
+        className="heading_section italic bg-white font-semibold text-3xl text-center p-5 pt-5 text-blue-800"
       >
         Top Comapnies
       </div>
@@ -274,24 +256,13 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="sub flex p-5 w-5/6 mx-auto border-t">
-            <div className="cursor-pointer hover:underline items mx-auto">
-              Our Partners
-            </div>
-            <div className="cursor-pointer hover:underline items mx-auto">
-              Policy
-            </div>
-            <div className="cursor-pointer hover:underline items mx-auto">
-              Facilities
-            </div>
-            <div className="cursor-pointer hover:underline items mx-auto">
-              Developer
-            </div>
+          <div className="text-xs p-3 item-centre mx-auto border-t">
+           <p>© Copyright 2023. All Rights Reserved.</p>
           </div>
         </div>
       </div>
 
-      {/* <div className="filling pt-14"></div> */}
+    
     </div>
   );
 };

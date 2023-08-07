@@ -1,16 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import axios from "../../Config/axios"
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate,Link } from "react-router-dom";
+import { BASE_URL } from "../../utils/urls"
+import { employerDetails } from '../../Components/redux-toolkit/slices/employerSlice';
 
 const CompanySlider = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [employers, setEmployers] = useState([]);
+  const user = useSelector((state) => state.loggedUser.userInfo)
+  console.log("asd:",user)
+  useEffect(() => {
+    (async () => {
+        const fetchEmployers = await axios.get(`api/user/employers?userId=${ user._id }`)
+        setEmployers(fetchEmployers.data.employers);
+       
+    })()
+}, [  employers.length]);
     const [transform, setTransform] = useState(0);
-  
+    
+   
     const goNext = () => {
-      setTransform((prevTransform) => prevTransform - 398);
+      const maxTransform = -398 * (employers.length - 1);
+      if (transform > maxTransform) {
+        setTransform((prevTransform) => prevTransform - 398);
+      }
     };
-  
+    
+    
     const goPrev = () => {
-      setTransform((prevTransform) => prevTransform + 398);
+      if (transform < 0) {
+        setTransform((prevTransform) => prevTransform + 398);
+      }
     };
-  
+
+    const showEmployerDetails = (employer) => {
+      dispatch(employerDetails(employer))
+      navigate(`/user/employer/details/${ employer._id }`)
+  }
+    
+   
+   
     return (
       <div className="flex items-center justify-center w-full h-full py-24 sm:py-8 px-4">
         <div className="w-full relative flex items-center justify-center">
@@ -40,61 +72,46 @@ const CompanySlider = () => {
           <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
             <div
               id="slider"
-              className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700"
+              className="h-full flex lg:gap-6 md:gap-2 gap-6 items-center justify-start transition ease-out duration-700"
               style={{ transform: `translateX(${transform}px)` }}
+              size={ 9 }
             >
-
-              <div className="flex flex-shrink-0 relative w-full sm:w-auto">
-                <div className="flex flex-col justify-center items-center h-[100vh]">
+              { employers.map((employer, index) => (
+              <div className="flex flex-shrink-0 relative w-full sm:w-auto cursor-pointer" key={ index } onClick={ () => showEmployerDetails(employer) }>
+                <div className="flex flex-col justify-center items-center h-[40vh]">
                   <div className="relative flex flex-col items-center border rounded-[20px] w-[300px] mx-auto p-4 bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none">
-                    <div className="relative flex h-32 w-full justify-center rounded-xl bg-cover">
+                    <div className="relative flex h-28 w-full justify-center rounded-xl bg-cover">
                       <img
-                        src="/images/giantEagle.jpg"
-                        className="absolute flex h-32 w-full justify-center  bg-cover"
+                         src={`${BASE_URL}/user/${
+                          employer.employerdetails.coverPhoto
+                            ? employer.employerdetails.coverPhoto
+                            : ""
+                        }`}
+                        className="absolute flex h-28 w-full justify-center  bg-cover"
                         alt="Banner"
                       />
-                      <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
+                      <div className="absolute -bottom-12 flex h-[60px] w-[60px] items-center justify-center square-full border-[4px] border-white bg-white dark:!border-navy-700">
                         <img
                           className="h-full w-full rounded-full"
-                          src="/images/giant eagle.jpg"
-                          alt="Avatar"
+                          src={`${BASE_URL}/user/${
+                            employer.employerdetails.logo
+                              ? employer.employerdetails.logo
+                              : ""
+                          }`}
                         />
                       </div>
                     </div>
+                 
                     <div className="mt-16 flex flex-col items-center">
                       <h4 className="text-xl font-bold text-navy-700 dark:text-white">
-                        Adela Parkson
+                        {employer.firstName}
                       </h4>
                       <p className="text-base font-normal text-gray-600">
-                        Product Manager
+                        {employer.employerdetails.websiteUrl}
                       </p>
                     </div>
-                    <div className="mt-6 mb-3 flex gap-14 md:!gap-14">
-                      <div className="flex flex-col items-center justify-center">
-                        <p className="text-2xl font-bold text-navy-700 dark:text-white">
-                          17
-                        </p>
-                        <p className="text-sm font-normal text-gray-600">
-                          Posts
-                        </p>
-                      </div>
-                      <div className="flex flex-col items-center justify-center">
-                        <p className="text-2xl font-bold text-navy-700 dark:text-white">
-                          9.7K
-                        </p>
-                        <p className="text-sm font-normal text-gray-600">
-                          Followers
-                        </p>
-                      </div>
-                      <div className="flex flex-col items-center justify-center">
-                        <p className="text-2xl font-bold text-navy-700 dark:text-white">
-                          434
-                        </p>
-                        <p className="text-sm font-normal text-gray-600">
-                          Following
-                        </p>
-                      </div>
-                    </div>
+                    
+                   
                   </div>
                  
                 </div>
@@ -102,7 +119,7 @@ const CompanySlider = () => {
 
 
              
-             
+              ))}
              
               {/* Add more slide elements here */}
             </div>

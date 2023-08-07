@@ -1,44 +1,31 @@
-
-
 import React from "react";
 import { useSelector } from "react-redux";
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
-import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
-
-
-
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 
 const ViewJob = () => {
   const job = useSelector((state) => state.jobDetails.jobInfo);
-  
- 
-  const user= useSelector((state)=>state.loggedUser.userInfo.employerdetails)
 
+  const user = useSelector(
+    (state) => state.loggedUser.userInfo.employerdetails
+  );
 
-return (
+  return (
     <div className="md:flex items-start justify-center py-1 2xl:px-20 md:px-6 px-4">
       <div className="xl:w-1/6 lg:w-3/5 w-80 md:px-12 md:block hidden">
-      
-          
-              {user?.logo ? (
-                <img
-                   className="w-20"
-                  src={`http://localhost:8080/user/${user.logo}`}
-                  alt="Uploaded logo"
-                 />
-              ) : (
-                <span className="text-white">No logo available</span>
-              )}
-           
-           
-                
-         
-           
+        {user?.logo ? (
+          <img
+            className="w-20"
+            src={`http://localhost:8080/user/${user.logo}`}
+            alt="Uploaded logo"
+          />
+        ) : (
+          <span className="text-white">No logo available</span>
+        )}
       </div>
-     
+
       <div className="xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6">
         <div className="border-b border-gray-200 pb-6">
-         
           <h1
             className="
 							lg:text-2xl
@@ -51,28 +38,29 @@ return (
 						"
           >
             {user?.companyName}
-            
           </h1>
-          <p className="text-sm py-2 leading-none text-gray-600">{job?.location}</p>
+          <p className="text-sm py-2 leading-none text-gray-600">
+            {job?.location}
+          </p>
         </div>
         <div className="py-4 border-b border-gray-200 flex items-center justify-between">
           <p className="text-base leading-4 text-gray-800">Salary</p>
           <div className="flex items-center justify-center">
-             <CurrencyRupeeIcon style={{fontSize:"small"}}
-                className ="mr-0.5   text-gray-600"
-                
-              />
+            <CurrencyRupeeIcon
+              style={{ fontSize: "small" }}
+              className="mr-0.5   text-gray-600"
+            />
             <p className="text-sm leading-none text-gray-600">
               {job?.salary} a year
             </p>
           </div>
         </div>
         <div className="py-4 border-b border-gray-200 flex items-center justify-between">
-           
           <p className="text-base leading-4 text-gray-800">Job-Type</p>
           <div className="flex items-center justify-centre">
-          <WorkOutlineOutlinedIcon style={{fontSize:"small"}}
-                className ="mr-0.5   text-gray-600"
+            <WorkOutlineOutlinedIcon
+              style={{ fontSize: "small" }}
+              className="mr-0.5   text-gray-600"
             />
             <p className="text-sm leading-none text-gray-600 mr-3">
               {job?.jobtype[0].name}
@@ -112,14 +100,14 @@ return (
           {job?.jobTitle}
         </button>
         <div>
-        <p className="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 mt-7">
+          <p className="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 mt-7">
             About the job
           </p>
 
           <p className="text-base leading-6 mt-4 text-gray-600">
             {job?.description}
           </p>
-        <p className="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 mt-7">
+          <p className="xl:pr-48 text-base lg:leading-tight leading-normal text-gray-600 mt-7">
             Skills Required
           </p>
 
@@ -127,29 +115,18 @@ return (
             {job?.skills}
           </p>
           <p className="text-base leading-4 mt-7 text-gray-600">
-            About the Company 
+            About the Company
           </p>
           <p className="text-base leading-6 mt-4 text-gray-600">
             {user?.userBio}
           </p>
-         
+
           <p className="text-base leading-4 mt-4 text-gray-600">
             Experience Required: {job?.experience} Years
           </p>
-         
         </div>
-      
       </div>
     </div>
   );
 };
 export default ViewJob;
-
-
-
-
-
-
-
-
-

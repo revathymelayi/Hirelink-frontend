@@ -40,7 +40,7 @@ const YourComponent = () => {
               
              
               <div className="px-1">
-                <h2 className="text-lg font-semibold">{user?.firstName}{user?.lastName}</h2>
+                <h2 className="text-lg font-semibold">{user?.firstName} {user?.lastName}</h2>
                 <span className="flex items-center space-x-1">
                   <a
                     rel="noopener noreferrer"

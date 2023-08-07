@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../../Config/axios";
 import { useDispatch, useSelector } from "react-redux";
-
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { employerDetails } from "../../redux-toolkit/slices/employerSlice";
 import { jobDetails } from "../../redux-toolkit/slices/jobSlice";
@@ -17,32 +17,54 @@ function Index() {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage] = useState(8);
 
+
   useEffect(() => {
-    (async () => {
-      const fetchJobs = await axios.get(
+    fetchJobs(); // Fetch jobs when component mounts
+  }, [currentPage, jobsPerPage]);
+
+  const fetchJobs = async () => {
+    try {
+      const fetchJobsResponse = await axios.get(
         `api/user/jobs?userId=${user._id}&page=${currentPage}&limit=${jobsPerPage}`
       );
-      const totalJobs = fetchJobs.data.totalJobsCount;
+      const totalJobs = fetchJobsResponse.data.totalJobsCount;
       const totalPages = Math.ceil(totalJobs / jobsPerPage);
       setTotalPages(totalPages);
-      setJobs(fetchJobs.data.jobs);
-    })();
-  }, [currentPage, jobsPerPage]);
+      setJobs(fetchJobsResponse.data.jobs);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An error occurred. Please try again later");
+      }
+    }
+  };
+
   const showJobDetails = (job) => {
     console.log("job:",job)
     console.log("12345");
     dispatch(jobDetails(job))
     navigate(`/user/job/view`);
   };
+
   const [search, setSearchValue] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    searchJob(search)
+    console.log("Search Value:", search);
+    if(search===""){
+      fetchJobs()
+    }else{
+      searchJob(search)
       .then((res) => {
         setJobs(res.showJob);
       })
       .catch((error) => {});
+    }
+   
   };
+
+ 
+
   const [totalPages, setTotalPages] = useState(0);
 
   const handlePageChange = (page) => {
@@ -69,6 +91,13 @@ function Index() {
             >
               Go
             </button>
+            {/* <button
+        type="button"
+        className="bg-gray-300 text-gray-700 px-4 py-2 rounded-r-md"
+        onClick={handleClear}
+      >
+        Clear
+      </button> */}
           </div>
         </div>
       </form>
@@ -86,7 +115,7 @@ function Index() {
                 
                 <div className="text-lg font-semibold text-bookmark-blue flex space-x-1 items-center mb-2">
                   <svg
-                    className="w-7 h-7 text-gray-500"
+                    className="w-5 h-5 text-gray-500"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,12 +127,13 @@ function Index() {
                     />
                     <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
                   </svg>
+                  
                   <span> {job.jobTitle ? job.jobTitle : ""} </span>
                 </div>
               </div>
               <div className="text-sm text-gray-500 flex space-x-1 items-center">
                 <svg
-                  className="w-6 h-6"
+                  className="w-4 h-4"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +153,7 @@ function Index() {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-6 h-6"
+                  class="w-4 h-4"
                 >
                   <path
                     stroke-linecap="round"

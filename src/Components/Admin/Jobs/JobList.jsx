@@ -52,9 +52,40 @@ const JobList = () => {
                     },
                     {
                         Header: "No . of applicants",
-                        accessor: "0",
+                        accessor: "numberOfApplicants",
+                    },
+                    {
+                        Header: "Status",
+                        accessor: "status",
+                        Cell: ({ value, row }) => {
+                            const [isChecked, setIsChecked] = useState(
+                                value
+                            );
+                            const handleJobStatus = async (e) => {
+                                setIsChecked(!isChecked);
+
+                                const response = await axios.put(
+                                    `/api/admin/job/change-status?jobId=${ row.original._id }`
+                                );
+                                alert(response.data.message);
+                            };
+                            return (
+                                <div style={ { display: "flex", flexDirection: "row" } }>
+                                    <Switch
+                                        color="primary"
+                                        style={{ fontSize: "small" }}
+                                        checked={ isChecked }
+                                        onChange={ handleJobStatus }
+                                    />
+                                    <VisibilityIcon 
+                                    style={{ fontSize: "xl" }}
+                                    className=" mr-8 text-[rgb(228,208,54)] cursor-pointer mt-4" onClick={ () => viewJob(row.original) } />
+                                </div>
+                            );
+                        },
                     },
                    
+                    
                  
                 ],
             },

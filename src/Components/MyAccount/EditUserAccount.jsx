@@ -72,12 +72,11 @@ const EditUserAccount = () => {
     setCoverImage(URL.createObjectURL(e.target.files[0]));
   };
   const handleCompanyLogoChange = (e) => {
-    console.log(123456);
-    console.log("handleCompanyLogoChange called");
+   
     setCompanyLogo(e.target.files[0]);
     setCompanyImage(URL.createObjectURL(e.target.files[0]));
     console.log("Selected logo:", e.target.files[0]);
-    console.log("Show company image:", showCompanyImage);
+    
   };
   const onSubmit = async (data) => {
     try {
@@ -212,7 +211,7 @@ const EditUserAccount = () => {
                     <h3 className="text-yellow-500 text-sm">Upload logo </h3>
                     <img
                       className="h-12 w-12 object-cover square-full"
-                      // src="/images/user-plceholder.png"
+                     
                       alt={company.companyName}
                     />
                   </>

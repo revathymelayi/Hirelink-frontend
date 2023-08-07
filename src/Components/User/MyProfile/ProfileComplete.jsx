@@ -28,6 +28,10 @@ export default function ProfileComplete() {
       salary: "",
       experience: "",
       address: "",
+      about:"",
+      skills:"",
+      company:"",
+      jobRole:""
     },
   });
   const { qualification, resume, contactNumber, salary, experience, address } =
@@ -38,6 +42,10 @@ export default function ProfileComplete() {
       "salary",
       "experience",
       "address",
+      "about",
+      "skills",
+      "company",
+      "jobRole"
     ]);
   const [selectedResume, setResume] = useState("");
   const [showResumeFile, setResumeFile] = useState("");
@@ -57,6 +65,10 @@ export default function ProfileComplete() {
         formData.append("salary", data.salary);
         formData.append("experience", data.experience);
         formData.append("address", data.address);
+        formData.append("about", data.about);
+        formData.append("skills", data.skills);
+        formData.append("company", data.company);
+        formData.append("jobRole", data.jobRole);
         formData.append("resume", data.resume[0]);
         formData.append("userId", user._id);
 
@@ -83,10 +95,38 @@ export default function ProfileComplete() {
   return (
     <form onSubmit={handleSubmit(handleProfileComplete)} enctype="multipart/form-data">
       <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
+        <div className="border-b border-gray-900/10 pb-12 mt-4">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Profile
+           Hey,{user.firstName} Complete Your Profile
           </h2>
+          <div className="col-span-full mt-4">
+              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                About
+              </label>
+              <div className="mt-2">
+                <textarea
+                  id="about"
+                  name="about"
+                  rows={3}
+                  {...register("about", {
+                    required: "Tell about is required",
+                    pattern: {
+                      value:
+                        /^(?=.*\S)[A-Za-z\s\d!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]+$/i,
+                      message: "it should only contain letters",
+                    },
+                  })}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  
+                />
+                 {errors.about && (
+                  <small className="mt-2 text-red-500 text-sm">
+                    {errors.about.message}
+                  </small>
+                )}
+              </div>
+              <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
+            </div>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="col-span-full">
@@ -97,12 +137,9 @@ export default function ProfileComplete() {
                 Upload Resume
               </label>
 
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-5">
                 <div className="text-center">
-                  <PhotoIcon
-                    className="mx-auto h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
+                  
                   <div className="mt-4 flex text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="resume" 
@@ -120,7 +157,7 @@ export default function ProfileComplete() {
                         })}
                       />
                     </label>
-                    <p className="pl-1">or drag and drop</p>
+                   
                   </div>
                   <p className="text-xs leading-5 text-gray-600">
                     PDF files up to 10MB
@@ -135,10 +172,7 @@ export default function ProfileComplete() {
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Personal Information
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Use a permanent address where you can receive mail.
-          </p>
-
+         
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
               <label
@@ -163,7 +197,7 @@ export default function ProfileComplete() {
                   })}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-                {errors.qualoification && (
+                {errors.qualification && (
                   <small className="mt-2 text-red-500 text-sm">
                     {errors.qualification.message}
                   </small>
@@ -195,29 +229,7 @@ export default function ProfileComplete() {
               </div>
             </div>
 
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="region"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Experience
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="experience"
-                  id="experience"
-                  autoComplete="experience"
-                  {...register("experience")}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-                {errors.experience && (
-                  <small className="mt-2 text-red-500 text-sm">
-                    {errors.experience.message}
-                  </small>
-                )}
-              </div>
-            </div>
+          
 
             <div className="sm:col-span-2">
               <label
@@ -261,6 +273,118 @@ export default function ProfileComplete() {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+        <div className="border-b border-gray-900/10 pb-12">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">
+            Experience
+          </h2>
+         
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="qualification"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Company Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="company"
+                  name="company"
+                  type="company"
+                  autoComplete="company"
+                  {...register("company", {
+                    required: "Company Name is required",
+                    pattern: {
+                      value:
+                        /^(?=.*\S)[A-Za-z\s\d!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]+$/i,
+                      message: "it should only contain letters",
+                    },
+                  })}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {errors.company&& (
+                  <small className="mt-2 text-red-500 text-sm">
+                    {errors.company.message}
+                  </small>
+                )}
+              </div>
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="region"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Experience in Years
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="experience"
+                  id="experience"
+                  autoComplete="experience"
+                  {...register("experience")}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {errors.experience && (
+                  <small className="mt-2 text-red-500 text-sm">
+                    {errors.experience.message}
+                  </small>
+                )}
+              </div>
+            </div>
+
+            <div className="sm:col-span-2 sm:col-start-1">
+              <label
+                htmlFor="Role"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Job Role
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="jobRole"
+                  id="jobRole"
+                  autoComplete="jobRole"
+                  {...register("jobRole")}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {errors.jobRole && (
+                  <small className="mt-2 text-red-500 text-sm">
+                    {errors.jobRole.message}
+                  </small>
+                )}
+              </div>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="skills"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Top Skills
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="skills"
+                  id="skills"
+                  autoComplete="skills"
+                  {...register("skills")}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {errors.skills && (
+                  <small className="mt-2 text-red-500 text-sm">
+                    {errors.skills.message}
+                  </small>
+                )}
+              </div>
+            </div>
+
+           
+           
           </div>
         </div>
       </div>

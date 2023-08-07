@@ -11,6 +11,7 @@ import JobDetails from "../Components/User/Employers/JobDetails";
 import Profile from "../Components/User/MyProfile/Profile"
 import JobsList from "../Components/User/Jobs/JobsList";
 import ViewJob from "../Components/User/Jobs/ViewJob";
+import Messages from '../Components/Messages/Messages';
 
 const UserRoute = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,9 @@ const UserRoute = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  const [notifications, setNotifications] = useState([]);
+  const [selectedChat, setSelectedChat] = useState("");
+
   return (
     <div className="">
       {/* Header */}
@@ -29,7 +33,7 @@ const UserRoute = () => {
         <Loader />
       ) : (
         <Suspense fallback={<Loader />}>
-          <Header />
+          <Header notifications={ notifications } setNotifications={ setNotifications } setSelectedChat={ setSelectedChat }/>
           {/* Body */}
           <main className="px-10 overflow-x-hidden md:px-8">
             <div className="mx-auto max-w-6xl sm:px-6 lg:px-8">
@@ -45,7 +49,7 @@ const UserRoute = () => {
                 <Route path="profile" element={<Profile/>} />
                 <Route path='jobs'element={<JobsList/>}/>
                 <Route path="job/view" element={<ViewJob/>}/>
-
+                <Route path="chats" element={ <Messages setNotifications={ setNotifications } notifications={ notifications } selectedChat={ selectedChat } /> } />
                 <Route path="*" element={<Error />} />
               </Routes>
             </div>
