@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "https://thecartzilla.shop",
   timeout: 2000,
 });
 
