@@ -38,7 +38,7 @@ const YourComponent = () => {
               {company?.logo ? (
                 <img
                    className="w-12 h-12 square-full dark:bg-gray-500" 
-                  src={`http://localhost:8080/user/${company.logo}`}
+                  src={`http://localhost:3000/user/${company.logo}`}
                   alt="Uploaded logo"
                  />
               ) : (
