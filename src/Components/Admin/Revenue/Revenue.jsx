@@ -59,7 +59,7 @@ const Revenue = () => {
                           <img
                             className="object-cover w-full h-full rounded-full"
                           
-                            src={`http://localhost:8080/user/${data.logo}`}
+                            src={`https://thecartzilla.shop/user/${data.logo}`}
                             alt=""
                             loading="lazy"
                           />
