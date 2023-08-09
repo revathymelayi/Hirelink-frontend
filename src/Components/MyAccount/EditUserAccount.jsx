@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
 const EditUserAccount = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.loggedUser.userInfo);
   const company = useSelector(
     (state) => state.loggedUser.userInfo.employerdetails
@@ -218,7 +218,7 @@ const EditUserAccount = () => {
                 ) : (
                   <img
                     className="h-12 w-12 object-cover square-full"
-                    src={`http://localhost:3000/user/${company.logo}`}
+                    src={`https://thecartzilla.shop/user/${company.logo}`}
                     alt={company.companyName}
                   />
                 )}
@@ -273,7 +273,7 @@ const EditUserAccount = () => {
                           <img
                             className="h-full w-full"
                             id="selected-image"
-                            src={`http://localhost:3000/user/${company.coverPhoto}`}
+                            src={`https://thecartzilla.shop/user/${company.coverPhoto}`}
                             alt="Selected Image"
                           />
                         </div>
