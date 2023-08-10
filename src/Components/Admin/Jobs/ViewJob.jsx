@@ -13,7 +13,7 @@ function ViewJob() {
              {job.employer[0].employerdetails?.logo ? (
               <img
                 className="w-20"
-                src={`http://localhost:8080/user/${job.employer[0].employerdetails.logo}`}
+                src={`https://thecartzilla.shop/user/${job.employer[0].employerdetails.logo}`}
                 alt="Uploaded logo"
               />
             ) : (
