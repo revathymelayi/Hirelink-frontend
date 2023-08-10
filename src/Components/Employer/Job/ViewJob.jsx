@@ -16,7 +16,7 @@ const ViewJob = () => {
         {user?.logo ? (
           <img
             className="w-20"
-            src={`http://localhost:8080/user/${user.logo}`}
+            src={`https://thecartzilla.shop/user/${user.logo}`}
             alt="Uploaded logo"
           />
         ) : (
