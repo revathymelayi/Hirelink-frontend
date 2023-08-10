@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loggedUserDetails } from "../../redux-toolkit/slices/userSlice";
 import { useForm } from "react-hook-form";
 import {  useNavigate } from "react-router-dom";
-import { PhotoIcon } from "@heroicons/react/24/solid";
+
 
 export default function ProfileComplete() {
   const dispatch = useDispatch();

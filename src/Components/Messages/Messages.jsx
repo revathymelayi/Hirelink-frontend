@@ -187,7 +187,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
                   {user.logo ? (
                     <img
                       className="h-10 w-10 rounded-full object-cover mr-2"
-                      src={`http://localhost:8080/user/${user.logo}`}
+                      src={`https://thecartzilla.shop/user/${user.logo}`}
                       alt=""
                     />
                   ) : (
