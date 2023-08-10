@@ -118,7 +118,7 @@ const LandingPage = () => {
         Jobs Hiring Now
       </div>
 
-      {/* <JobSlider /> */}
+       <JobSlider /> 
 
       <div className="section py-5 w-full scree border grid md:grid-cols-2 bg-white text-gray-800">
         <div className="subsec flex-none overflow-hidden max-h-96">

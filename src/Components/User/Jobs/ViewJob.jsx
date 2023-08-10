@@ -121,13 +121,13 @@ const ViewJob = () => {
           {job.employer?.logo ? (
             <img
               className=" w-28 "
-              src={`http://localhost:8080/user/${job.employer?.logo}`}
+              src={`https://thecartzilla.shop/user/${job.employer?.logo}`}
               alt=""
             />
           ) : (
             <img
               className="w-28"
-              src={`http://localhost:8080/user/${job.logo}`}
+              src={`https://thecartzilla.shop/user/${job.logo}`}
               alt="Fallback Logo"
             />
           )}
