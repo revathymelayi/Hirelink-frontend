@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux-toolkit/slices/userSlice";
 import Badge from '@mui/material/Badge';
 import Stack from '@mui/material/Stack';
+import { BellIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: "Dashboard", href: "/employer/dashboard", current: false },
@@ -17,6 +18,10 @@ const userNavigation = [
   { name: "My Account", href: "#", id: "account" },
   { name: "Sign out", href: "#", id: "signout" },
 ];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function Header({ notifications, setNotifications, setSelectedChat }) {
   const navigate = useNavigate();
@@ -112,31 +117,60 @@ export default function Header({ notifications, setNotifications, setSelectedCha
               <div className="animate-ping w-1.5 h-1.5 bg-blue-700 rounded-full absolute -top-1 -right-1 m-auto duration-200" />
               <div className=" w-1.5 h-1.5 bg-blue-700 rounded-full absolute -top-1 -right-1 m-auto shadow-lg" />
             </div>
-            <Badge badgeContent={ notifications.length > 0 ? notifications.length : "0" } color="secondary">
-            <svg
-              className="cursor-pointer  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 "
-              width={24}
-              height={24}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
-                stroke="#1F2937"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
-                stroke="#1F2937"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            </Badge>
+            <Menu as="div" className="relative">
+              <div>
+                <Menu.Button className="flex items-center text-gray-600">
+                  <span className="sr-only">View notifications</span>
+                  <Stack spacing={2} direction="row">
+                    <Badge
+                      badgeContent={
+                        notifications.length > 0 ? notifications.length : "0"
+                      }
+                      color="secondary"
+                    >
+                      <BellIcon
+                        className="h-6 w-6 text-gray-700"
+                        color="action"
+                      />
+                    </Badge>
+                  </Stack>
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 z-10 w-40 mt-2 py-2  text-white bg-blue-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  {/* Dropdown menu content */}
+                  { !notifications.length && <span className='block px-4 py-5 text-sm text-white cursor-pointer'>No New Messages</span> }
+                  {notifications.map((item) => (
+                    <Menu.Item key={item._id}>
+                      {({ active }) => (
+                        <a
+                          onClick={() => {
+                            setSelectedChat(item.sender._id);
+                            setNotifications(
+                              notifications.filter((n) => n !== item)
+                            );
+                          }}
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block px-8 py-8 text-sm text-gray-700 cursor-pointer"
+                          )}
+                        >
+                          {`New Message from ${item.sender.firstName} `}
+                        </a>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </Transition>
+            </Menu>
 
             <Menu as="div" className="relative">
               <div>

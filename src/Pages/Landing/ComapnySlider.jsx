@@ -11,7 +11,7 @@ const CompanySlider = () => {
 
   const [employers, setEmployers] = useState([]);
   const user = useSelector((state) => state.loggedUser.userInfo)
-  console.log("asd:",user)
+
   useEffect(() => {
     (async () => {
         const fetchEmployers = await axios.get(`api/auth/employers`)
@@ -121,7 +121,7 @@ const CompanySlider = () => {
              
               ))}
              
-              {/* Add more slide elements here */}
+              
             </div>
           </div>
           <button
