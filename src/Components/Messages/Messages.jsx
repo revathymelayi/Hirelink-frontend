@@ -9,7 +9,7 @@ import {
   sendMessage,
 } from "../../Services/UserApi";
 
-const EndPoint = "http://localhost:8080";
+const EndPoint= "https://thecartzilla.shop/";
 var socket, selectedchatcompare;
 
 function Messages({ setNotifications, notifications, selectedChat }) {
@@ -22,7 +22,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
   const [message, setMessage] = useState("");
   const [typing, setTyping] = useState(false);
   const [updated, setUpdated] = useState(false);
-
+  const [showInput, setInput] = useState(false)
   const chatContainerRef = useRef(null);
 
   const user = useSelector((state) => state.loggedUser.userInfo);
@@ -44,7 +44,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
   }, [user._id]);
 
   useEffect(() => {
-    console.log("selectedChat====", selectedChat);
+    
     if (selectedChat) {
       createNewChat(selectedChat).then((res) => {
         if (res._id) {
@@ -59,7 +59,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
 
           socket.emit("join chat", chatid);
           getChats().then((res) => {
-            console.log("res", res);
+           
             const chatUsers = res.map((item) => {
               return item.chats[0].users.filter(
                 (chatuser) => chatuser._id != user._id
@@ -108,6 +108,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
   });
 
   const handleUserSelection = (users) => {
+    setInput(true)
     setSelectedUser(users.firstName);
 
     createNewChat(users._id).then((res) => {
@@ -178,7 +179,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
                     : "bg-indigo-300"
                 } hover:bg-blue-700 transition-colors duration-300`}
                 onClick={() => {
-                  console.log("asdfg:", user);
+                 
                   handleUserSelection(user);
                 }}
               >
@@ -241,6 +242,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
               <p className="my-auto">Select a user to start chatting.</p>
             )}
           </div>
+          { showInput && (
           <div className="message-input flex items-center">
             {istyping ? <div className="text-blue-900">Typing...</div> : <></>}
             <input
@@ -257,6 +259,7 @@ function Messages({ setNotifications, notifications, selectedChat }) {
               <SendIcon />
             </button>
           </div>
+          )}
         </div>
       </div>
     </>
