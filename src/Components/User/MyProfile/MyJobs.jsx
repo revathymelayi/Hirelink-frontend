@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from '../../../Config/axios';
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "../../../Config/axios";
 
 const JobListing = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -9,10 +9,12 @@ const JobListing = () => {
   useEffect(() => {
     const fetchAppliedJobs = async () => {
       try {
-        const response = await axios.get(`api/user/appliedJobs?userId=${user._id}`);
+        const response = await axios.get(
+          `api/user/appliedJobs?userId=${user._id}`
+        );
         setAppliedJobs(response.data.appliedJobs);
       } catch (error) {
-        console.error('Error fetching applied jobs:', error);
+        console.error("Error fetching applied jobs:", error);
       }
     };
 
@@ -24,15 +26,15 @@ const JobListing = () => {
       {appliedJobs.map((appliedJob) => (
         <div
           key={appliedJob._id}
-           className="rounded  shadow w-full px-1 py-1  " 
+          className="rounded  shadow w-full px-1 py-1  "
         >
           <div>
-          
             <h3 className="font-bold mt-px">{appliedJob.job.jobTitle}</h3>
-            
-            <span className="text-blue-700 text-sm">{appliedJob.employer.companyName}</span>
+
+            <span className="text-blue-700 text-sm">
+              {appliedJob.employer.companyName}
+            </span>
             <div className="flex items-center gap-3 mt-2">
-             
               <span className="text-gray-400 text-sm flex gap-1 items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,25 +59,17 @@ const JobListing = () => {
               </span>
             </div>
           </div>
-          {/* <div>
-            <button className="bg-purple-900 text-white font-medium px-4 py-2 rounded-md flex gap-1 items-center">
-              Apply Now
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </button>
-          </div> */}
+          <div>
+            {appliedJob.currentStatus ? (
+              <span className="px-2 py-1 bg-blue-400 text-white text-xs rounded">
+                Applied
+              </span>
+            ) : (
+              <span className="px-2 py-1 bg-green-500 text-white text-xs rounded">
+                Shortlisted
+              </span>
+            )}
+          </div>
         </div>
       ))}
     </div>
@@ -83,4 +77,3 @@ const JobListing = () => {
 };
 
 export default JobListing;
-
